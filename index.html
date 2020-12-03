@@ -50,10 +50,6 @@
                     {nome: "GVT", codigo: 25, categoria: "Fixo"},
                     {nome: "GVT", codigo: 21, categoria: "Fixo"}
                 ]
-
-                $scope.classe = "selecionado";
-                $scope.negrito = "negrito";
-
             })
         </script>
     </head>
@@ -61,13 +57,16 @@
         <div ng-controller="listaTelefonicaCtrl">
             <div class="jumbotron">
                 <h3 ng-bind="app"></h3>
+                {{contatos}}
                 <table class="table">
                     <tr>
+                        <th></th>
                         <th>Nome</th>
                         <th>Telefone</th>
                         <th>Operadora</th>
                     </tr>
-                    <tr ng-class="[classe, negrito]" ng-repeat="contato in contatos">
+                    <tr ng-class="{'selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos">
+                        <th><input type="checkbox" ng-model="contato.selecionado" /></th>
                         <td>{{contato.nome}}</td>
                         <td>{{contato.telefone}}</td>
                         <td>{{contato.operadora.nome}}</td>
@@ -84,6 +83,7 @@
                         <option value="">Selecione uma operadora</option>
                 </select>
                 <button class="btn btn-primary btn-block" ng-click="adicionarContato(contato)" ng-disabled="!contato.nome || !contato.telefone">Adicionar contato</button>
+                <button class="btn btn-danger btn-block" ng-click="apagarContatos(contato)" ng-disabled="!contato.nome || !contato.telefone">Apagar contato</button>
                 {{contato}}
             </div>
         </div>
