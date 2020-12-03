@@ -35,8 +35,8 @@
             angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($scope) {
                 $scope.app = 'Lista Telefonica'
                 $scope.contatos = [
-                    {nome: 'Pedro', telefone: '99998888'},
-                    {nome: 'Maria', telefone: '99998887'},
+                    {nome: "Pedro", telefone: "99998888", cor: "blue"},
+                    {nome: "Maria", telefone: "99998887", cor: "black"},
                 ]
 
                 $scope.adicionarContato = function(contato) {
@@ -76,13 +76,15 @@
                         <th>Nome</th>
                         <th>Telefone</th>
                         <th>Operadora</th>
+                        <th></th>
                     </tr>
                     <tr ng-class="{'selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos">
                         <th><input type="checkbox" ng-model="contato.selecionado" /></th>
                         <td>{{contato.nome}}</td>
                         <td>{{contato.telefone}}</td>
                         <td>{{contato.operadora.nome}}</td>
-
+                        <td><div style="width: 20px; height: 20px;" ng-style="{'background-color': contato.cor}"></div></td>
+                   
                         <!-- Podemos iterar o td usando a linha abaixo de forma dinamica 
                             <td ng-repeat="(key, value) in contato">{{value}}</td>-->
                     </tr>
