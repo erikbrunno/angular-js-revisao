@@ -1,0 +1,21 @@
+<html ng-app="helloWorld">
+    <head>
+        <title>Hello world</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    
+        <script>
+            //Cria o modulo
+            angular.module("helloWorld", []);
+
+            //cria o controller
+            angular.module("helloWorld").controller("helloWorldCtrl", function($scope) {
+                $scope.message = 'Hello World Controller'
+            })
+        </script>
+    </head>
+    <body>
+        <div ng-controller="helloWorldCtrl">
+            {{message}}
+        </div>
+    </body>
+</html>
