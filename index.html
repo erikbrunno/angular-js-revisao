@@ -49,7 +49,19 @@
                     {nome: "Tim", codigo: 16, categoria: "Celular"},
                     {nome: "GVT", codigo: 25, categoria: "Fixo"},
                     {nome: "GVT", codigo: 21, categoria: "Fixo"}
-                ]
+                ];
+                $scope.apagarContatos = function(contatos) {
+                    $scope.contatos = contatos.filter(function(contato) {
+                        if (!contato.selecionado)
+                            return contato;
+                    })
+                }
+                $scope.isContatoSelecionado =  function(contatos) {
+                    return contatos.some(function(contato) {
+                        return contato.selecionado
+                    });
+                }
+
             })
         </script>
     </head>
@@ -83,7 +95,7 @@
                         <option value="">Selecione uma operadora</option>
                 </select>
                 <button class="btn btn-primary btn-block" ng-click="adicionarContato(contato)" ng-disabled="!contato.nome || !contato.telefone">Adicionar contato</button>
-                <button class="btn btn-danger btn-block" ng-click="apagarContatos(contato)" ng-disabled="!contato.nome || !contato.telefone">Apagar contato</button>
+                <button class="btn btn-danger btn-block" ng-click="apagarContatos(contatos)" ng-disabled="!isContatoSelecionado(contatos)">Apagar contato</button>
                 {{contato}}
             </div>
         </div>
