@@ -98,7 +98,7 @@
                     <input class="form-control" type="text" 
                         ng-model="contato.nome" name="nome" 
                         placeholder="Nome" ng-required="true"
-                       />
+                        ng-minLength="10"/>
                     <input class="form-control" type="text" 
                         ng-model="contato.telefone" name="telefone" 
                         placeholder="Telefone" ng-required="true"/>
@@ -108,8 +108,11 @@
                     </select>
                 </form>
 
-                <div class="alert alert-danger" ng-show="contatoForm.nome.$invalid && contatoForm.nome.$dirty">
+                <div class="alert alert-danger" ng-show="contatoForm.nome.$error.required && contatoForm.nome.$dirty">
                     Por favor, preencha o campo nome
+                </div>
+                <div class="alert alert-danger" ng-show="contatoForm.nome.$error.minlength">
+                    O campo nome deve ter 10 caracteres
                 </div>
                 
                 <div class="alert alert-danger" ng-show="contatoForm.telefone.$invalid && contatoForm.telefone.$dirty">
