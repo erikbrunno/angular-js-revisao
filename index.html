@@ -1,5 +1,6 @@
 <html ng-app="listaTelefonica">
     <head>
+        <meta charset="UTF-8">
         <title>Lista Telefonica</title>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
@@ -42,6 +43,8 @@
                 $scope.adicionarContato = function(contato) {
                     $scope.contatos.push(angular.copy(contato));
                     delete $scope.contato
+                    //Volta o contatoForm ao estado virgem
+                    $scope.contatoForm.$setPristine()
                 };
                 $scope.operadoras = [
                     {nome: "Oi", codigo: 14, categoria: "Celular"},
@@ -69,7 +72,6 @@
         <div ng-controller="listaTelefonicaCtrl">
             <div class="jumbotron">
                 <h3 ng-bind="app"></h3>
-                {{contatos}}
                 <table ng-show="contatos.length > 0" class="table">
                     <tr>
                         <th></th>
@@ -90,16 +92,35 @@
                     </tr>
                 </table>
                 <hr />
-                <input class="form-control" type="text" ng-model="contato.nome" placeholder="Nome"/>
-                <input class="form-control" type="text" ng-model="contato.telefone" placeholder="Telefone"/>
-                <select class="form-control" 
-                    ng-model="contato.operadora" ng-options="operadora.nome group by operadora.categoria for operadora in operadoras">
-                        <option value="">Selecione uma operadora</option>
-                </select>
-                <button class="btn btn-primary btn-block" ng-click="adicionarContato(contato)" ng-disabled="!contato.nome || !contato.telefone">Adicionar contato</button>
+                É valido {{contatoForm.$valid}}
+                É invalido {{contatoForm.$invalid}}
+                <form name="contatoForm">
+                    <input class="form-control" type="text" 
+                        ng-model="contato.nome" name="nome" 
+                        placeholder="Nome" ng-required="true"
+                       />
+                    <input class="form-control" type="text" 
+                        ng-model="contato.telefone" name="telefone" 
+                        placeholder="Telefone" ng-required="true"/>
+                    <select class="form-control" 
+                        ng-model="contato.operadora" ng-options="operadora.nome group by operadora.categoria for operadora in operadoras">
+                            <option value="">Selecione uma operadora</option>
+                    </select>
+                </form>
+
+                <div class="alert alert-danger" ng-show="contatoForm.nome.$invalid && contatoForm.nome.$dirty">
+                    Por favor, preencha o campo nome
+                </div>
+                
+                <div class="alert alert-danger" ng-show="contatoForm.telefone.$invalid && contatoForm.telefone.$dirty">
+                    Por favor, preencha o campo telefone
+                </div>
+
+                <button class="btn btn-primary btn-block" ng-click="adicionarContato(contato)" ng-disabled="contatoForm.$invalid">Adicionar contato</button>
                 <button class="btn btn-danger btn-block" ng-click="apagarContatos(contatos)" ng-if="isContatoSelecionado(contatos)">Apagar contato</button>
             </div>
         </div>
-        <div ng-include="'footer.html'"></div>
+        <!-- codigo comentado por contao cross origin
+            <div ng-include="'footer.html'"></div>-->
     </body>
 </html>
