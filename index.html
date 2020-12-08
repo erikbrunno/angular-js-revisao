@@ -9,7 +9,7 @@
         
         <style>
             .jumbotron {
-                width: 400px;
+                width: 600px;
                 text-align: center;
                 margin-top: 20px;
                 margin-left: auto;
@@ -37,8 +37,8 @@
             angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($scope) {
                 $scope.app = 'Lista Telefonica'
                 $scope.contatos = [
-                    {nome: "Pedro", telefone: "99998888", cor: "blue"},
-                    {nome: "Maria", telefone: "99998887", cor: "black"},
+                    {nome: "Pedro", telefone: "99998888", data: new Date(), operadora: {nome: "Oi", codigo: 14, categoria: "Celular"}, cor: "blue"},
+                    {nome: "Maria", telefone: "99998887", data: new Date(), operadora:  {nome: "GVT", codigo: 25, categoria: "Fixo"}, cor: "black"},
                 ]
 
                 $scope.adicionarContato = function(contato) {
@@ -73,19 +73,22 @@
         <div ng-controller="listaTelefonicaCtrl">
             <div class="jumbotron">
                 <h3 ng-bind="app"></h3>
+                <input type="text" ng-model="criterioBusca" placeholder="O que você está buscando?" />
                 <table ng-show="contatos.length > 0" class="table">
                     <tr>
                         <th></th>
                         <th>Nome</th>
                         <th>Telefone</th>
                         <th>Operadora</th>
+                        <th>Data</th>
                         <th></th>
                     </tr>
-                    <tr ng-class="{'selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos">
+                        <tr ng-class="{'selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos | filter: {nome: criterioBusca}">
                         <th><input type="checkbox" ng-model="contato.selecionado" /></th>
-                        <td>{{contato.nome}}</td>
+                        <td>{{contato.nome | uppercase}}</td>
                         <td>{{contato.telefone}}</td>
-                        <td>{{contato.operadora.nome}}</td>
+                        <td>{{contato.operadora.nome | lowercase}}</td>
+                        <td>{{contato.data | date: 'dd/MM/yyyy HH:mm'}}</td>
                         <td><div style="width: 20px; height: 20px;" ng-style="{'background-color': contato.cor}"></div></td>
                    
                         <!-- Podemos iterar o td usando a linha abaixo de forma dinamica 
