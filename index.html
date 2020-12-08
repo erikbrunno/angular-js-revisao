@@ -48,11 +48,11 @@
                     $scope.contatoForm.$setPristine()
                 };
                 $scope.operadoras = [
-                    {nome: "Oi", codigo: 14, categoria: "Celular"},
-                    {nome: "Vivo", codigo: 15, categoria: "Celular"},
-                    {nome: "Tim", codigo: 16, categoria: "Celular"},
-                    {nome: "GVT", codigo: 25, categoria: "Fixo"},
-                    {nome: "GVT", codigo: 21, categoria: "Fixo"}
+                    {nome: "Oi", codigo: 14, categoria: "Celular", preco: 1},
+                    {nome: "Vivo", codigo: 15, categoria: "Celular", preco: 2},
+                    {nome: "Tim", codigo: 16, categoria: "Celular", preco: 3},
+                    {nome: "GVT", codigo: 25, categoria: "Fixo", preco: 2},
+                    {nome: "Embratel", codigo: 21, categoria: "Fixo", preco: 1}
                 ];
                 $scope.apagarContatos = function(contatos) {
                     $scope.contatos = contatos.filter(function(contato) {
@@ -64,6 +64,10 @@
                     return contatos.some(function(contato) {
                         return contato.selecionado
                     });
+                }
+                $scope.ordernarPor = function(campo) {
+                    $scope.criterioOrdenacao = campo
+                    $scope.direcaoOrdenacao = !$scope.direcaoOrdenacao
                 }
 
             })
@@ -77,13 +81,14 @@
                 <table ng-show="contatos.length > 0" class="table">
                     <tr>
                         <th></th>
-                        <th>Nome</th>
-                        <th>Telefone</th>
+                        <th><a href="" ng-click="ordernarPor('nome')">Nome</a></th>
+                        <th><a href="" ng-click="ordernarPor('telefone')">Telefone</a></th>
                         <th>Operadora</th>
                         <th>Data</th>
                         <th></th>
                     </tr>
-                        <tr ng-class="{'selecionado negrito': contato.selecionado}" ng-repeat="contato in contatos | filter: {nome: criterioBusca}">
+                        <tr ng-class="{'selecionado negrito': contato.selecionado}" 
+                            ng-repeat="contato in contatos | filter: {nome: criterioBusca} | orderBy:criterioOrdenacao:direcaoOrdenacao">
                         <th><input type="checkbox" ng-model="contato.selecionado" /></th>
                         <td>{{contato.nome | uppercase}}</td>
                         <td>{{contato.telefone}}</td>
@@ -108,7 +113,7 @@
                         placeholder="Telefone" ng-required="true"
                         ng-pattern="/^\d{4,5}-\d{4}$/"/>
                     <select class="form-control" 
-                        ng-model="contato.operadora" ng-options="operadora.nome group by operadora.categoria for operadora in operadoras">
+                        ng-model="contato.operadora" ng-options="operadora.nome + ' - ' + (operadora.preco | currency) group by operadora.categoria for operadora in operadoras | orderBy:'nome'">
                             <option value="">Selecione uma operadora</option>
                     </select>
                 </form>
