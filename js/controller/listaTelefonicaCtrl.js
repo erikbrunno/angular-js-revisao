@@ -1,5 +1,5 @@
 //cria o controller
-angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($scope, contatosAPI, operadorasAPI) {
+angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($scope, contatosAPI, operadorasAPI, serialGenerator) {
     $scope.app = 'Lista Telefonica'
     $scope.contatos = [];
     $scope.operadoras = [];        
@@ -23,7 +23,8 @@ angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($sc
 
     $scope.adicionarContato = function(contato) {
         contato.data = undefined
-        
+        contato.serial = serialGenerator.generate();
+
         console.log('Salvando contato: ', contato)
         contatosAPI.saveContato(contato)
             .then(function(data) {
