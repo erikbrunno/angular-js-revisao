@@ -1,5 +1,5 @@
 //cria o controller
-angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($scope, $http, contatosAPI) {
+angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($scope, contatosAPI, operadorasAPI) {
     $scope.app = 'Lista Telefonica'
     $scope.contatos = [];
     $scope.operadoras = [];        
@@ -14,7 +14,7 @@ angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($sc
     }
 
    var carregarOperadoras = function() {
-        $http.get("http://localhost:8080/angularjs/operadoras")
+        operadorasAPI.getOperadoras()
             .then(function(response) {
                 console.log('Operadoras: ', response.data)
                 $scope.operadoras = response.data;
