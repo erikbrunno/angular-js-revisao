@@ -6,72 +6,11 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular-messages.js"></script>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" 
             integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="css/app.css">
+        <script src="js/app.js"></script>
+        <script src="js/controller/listaTelefonicaCtrl.js"></script>
+        <script src="js/services/contatosAPIService.js"></script>
         
-        <style>
-            .jumbotron {
-                width: 600px;
-                text-align: center;
-                margin-top: 20px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-            .table {
-                margin-top: 20px;
-            }
-            .form-control {
-                margin-bottom: 5px;
-            }
-            .selecionado {
-                background-color: yellow;
-            }
-            .negrito {
-                font-weight: bold;
-            }
-
-        </style>
-        <script>
-            //Cria o modulo
-            angular.module("listaTelefonica", ["ngMessages"]);
-
-            //cria o controller
-            angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($scope) {
-                $scope.app = 'Lista Telefonica'
-                $scope.contatos = [
-                    {nome: "Pedro", telefone: "99998888", data: new Date(), operadora: {nome: "Oi", codigo: 14, categoria: "Celular"}, cor: "blue"},
-                    {nome: "Maria", telefone: "99998887", data: new Date(), operadora:  {nome: "GVT", codigo: 25, categoria: "Fixo"}, cor: "black"},
-                ]
-
-                $scope.adicionarContato = function(contato) {
-                    $scope.contatos.push(angular.copy(contato));
-                    delete $scope.contato
-                    //Volta o contatoForm ao estado virgem
-                    $scope.contatoForm.$setPristine()
-                };
-                $scope.operadoras = [
-                    {nome: "Oi", codigo: 14, categoria: "Celular", preco: 1},
-                    {nome: "Vivo", codigo: 15, categoria: "Celular", preco: 2},
-                    {nome: "Tim", codigo: 16, categoria: "Celular", preco: 3},
-                    {nome: "GVT", codigo: 25, categoria: "Fixo", preco: 2},
-                    {nome: "Embratel", codigo: 21, categoria: "Fixo", preco: 1}
-                ];
-                $scope.apagarContatos = function(contatos) {
-                    $scope.contatos = contatos.filter(function(contato) {
-                        if (!contato.selecionado)
-                            return contato;
-                    })
-                }
-                $scope.isContatoSelecionado =  function(contatos) {
-                    return contatos.some(function(contato) {
-                        return contato.selecionado
-                    });
-                }
-                $scope.ordernarPor = function(campo) {
-                    $scope.criterioOrdenacao = campo
-                    $scope.direcaoOrdenacao = !$scope.direcaoOrdenacao
-                }
-
-            })
-        </script>
     </head>
     <body>
         <div ng-controller="listaTelefonicaCtrl">
@@ -138,7 +77,7 @@
                 <button class="btn btn-danger btn-block" ng-click="apagarContatos(contatos)" ng-if="isContatoSelecionado(contatos)">Apagar contato</button>
             </div>
         </div>
-        <!-- codigo comentado por contao cross origin
-            <div ng-include="'footer.html'"></div>-->
+        
+        <div ng-include="'view/footer.html'"></div>
     </body>
 </html>
