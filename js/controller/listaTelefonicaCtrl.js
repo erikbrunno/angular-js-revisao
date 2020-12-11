@@ -10,6 +10,8 @@ angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($sc
             .then(function(response) {
                 console.log('Contatos: ', response.data)
                 $scope.contatos = response.data
+            }).catch(function(data, error) {
+                $scope.error = "Não foi possível carregar os dados"
             })
     }
 
